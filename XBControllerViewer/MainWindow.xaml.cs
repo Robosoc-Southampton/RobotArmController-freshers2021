@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace XBControllerViewer
@@ -12,16 +13,21 @@ namespace XBControllerViewer
         public MainWindow()
         {
             InitializeComponent();
+            XBControllerInterface.Start();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine($"\n{DateTime.Now.ToLongTimeString()}: {XBControllerInterface.CountConnectedDevices()}");
-
-            if (XBControllerInterface.CountConnectedDevices() > 0)
+            if (XBControllerInterface.IsConnected(0))
             {
                 Debug.WriteLine(XBControllerInterface.GetState(0));
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            XBControllerInterface.SetVibrate(0, 0);
+            XBControllerInterface.Stop();
         }
     }
 }

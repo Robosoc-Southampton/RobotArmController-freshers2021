@@ -9,6 +9,10 @@
 
 // add headers that you want to pre-compile here
 #include "framework.h"
+
+#include <functional>
+#include <mutex>
+#include <thread>
 #include <Xinput.h>
 
 #endif //PCH_H

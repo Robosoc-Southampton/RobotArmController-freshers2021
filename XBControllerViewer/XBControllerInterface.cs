@@ -1,8 +1,9 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace XBControllerViewer
 {
-    unsafe static class XBControllerInterface
+    internal static unsafe class XBControllerInterface
     {
         public struct XBControllerState
         {
@@ -16,13 +17,26 @@ namespace XBControllerViewer
             }
         }
 
-        [DllImport(@"XBControllerInterface.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int CountConnectedDevices();
+        public struct XBVibrateStruct
+        {
+            public ushort lMoror, rMotor;
+        }
+
 
         [DllImport(@"XBControllerInterface.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void GetState(XBControllerState* state, int index);
+        public static extern void Start();
+        [DllImport(@"XBControllerInterface.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void Stop();
+        [DllImport(@"XBControllerInterface.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool IsConnected(uint index);
 
-        public static XBControllerState GetState(int index)
+        [DllImport(@"XBControllerInterface.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool HasData(uint index);
+
+        [DllImport(@"XBControllerInterface.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void GetState(XBControllerState* state, uint index);
+
+        public static XBControllerState GetState(uint index)
         {
             XBControllerState state = new XBControllerState();
 
@@ -30,5 +44,8 @@ namespace XBControllerViewer
 
             return state;
         }
+
+        [DllImport(@"XBControllerInterface.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetVibrate(uint a, ushort b);
     }
 }
