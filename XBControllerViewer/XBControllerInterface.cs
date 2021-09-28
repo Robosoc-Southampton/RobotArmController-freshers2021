@@ -17,11 +17,6 @@ namespace XBControllerViewer
             }
         }
 
-        public struct XBVibrateStruct
-        {
-            public ushort lMoror, rMotor;
-        }
-
 
         [DllImport(@"XBControllerInterface.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void Start();
@@ -46,6 +41,6 @@ namespace XBControllerViewer
         }
 
         [DllImport(@"XBControllerInterface.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetVibrate(uint a, ushort b);
+        public static extern void SetVibrate(uint index, ushort power);
     }
 }
