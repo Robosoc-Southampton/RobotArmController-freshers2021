@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace XBControllerViewer
 {
-    internal static unsafe class XBControllerInterface
+    public static unsafe class XBControllerInterface
     {
         public struct XBControllerState
         {

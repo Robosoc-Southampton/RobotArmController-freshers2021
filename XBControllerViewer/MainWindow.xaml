@@ -6,18 +6,37 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:XBControllerViewer"
         xmlns:viewmodel="clr-namespace:XBControllerViewer.ViewModel"
+        xmlns:view="clr-namespace:XBControllerViewer.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"
+        Height="450" Width="800"
+        Background="LightBlue">
 
     <Window.DataContext>
         <viewmodel:MainViewModel/>
     </Window.DataContext>
-    
+
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Closed" >
+        <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction Command="{Binding OnExit}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
+
+    <Border Background="Aquamarine" Padding="10"
+            HorizontalAlignment="Left" VerticalAlignment="Top">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left"
+                Margin="0"
+                DataContext="{Binding Controller}">
+            <StackPanel Orientation="Horizontal">
+                <view:DualAxisDisplay DataContext="{Binding LStick}"/>
+                <Separator Width="10" Background="Transparent"/>
+                <view:DualAxisDisplay DataContext="{Binding RStick}"/>
+            </StackPanel>
+            <Separator Height="10" Background="Transparent"/>
+            <view:SingleAxisDisplay DataContext="{Binding LTrigger}"/>
+            <Separator Height="10" Background="Transparent"/>
+            <view:SingleAxisDisplay DataContext="{Binding RTrigger}"/>
+        </StackPanel>
+    </Border>
     
 </Window>
