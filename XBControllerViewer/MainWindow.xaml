@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:XBControllerViewer"
         xmlns:viewmodel="clr-namespace:XBControllerViewer.ViewModel"
         xmlns:view="clr-namespace:XBControllerViewer.View"
+        xmlns:Converter="clr-namespace:XBControllerViewer.Converter"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="450" Width="800"
@@ -23,19 +24,39 @@
     </i:Interaction.Triggers>
 
     <Border Background="Aquamarine" Padding="10"
-            HorizontalAlignment="Left" VerticalAlignment="Top">
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Left"
-                Margin="0"
-                DataContext="{Binding Controller}">
-            <StackPanel Orientation="Horizontal">
-                <view:DualAxisDisplay DataContext="{Binding LStick}"/>
-                <Separator Width="10" Background="Transparent"/>
-                <view:DualAxisDisplay DataContext="{Binding RStick}"/>
+            HorizontalAlignment="Left" VerticalAlignment="Stretch">
+        <StackPanel Orientation="Horizontal">
+
+            <StackPanel Orientation="Vertical" 
+                    DataContext="{Binding Controller}">
+
+                <StackPanel Orientation="Horizontal">
+                    <view:DualAxisDisplay DataContext="{Binding LStick}"/>
+                    <Separator Width="10" Background="Transparent"/>
+                    <view:DualAxisDisplay DataContext="{Binding RStick}"/>
+                </StackPanel>
+
+                <Separator Height="10" Background="Transparent"/>
+                <view:SingleAxisDisplay DataContext="{Binding LTrigger}"/>
+                <Separator Height="10" Background="Transparent"/>
+                <view:SingleAxisDisplay DataContext="{Binding RTrigger}"/>
+                <Separator Height="10" Background="Transparent"/>
+
             </StackPanel>
-            <Separator Height="10" Background="Transparent"/>
-            <view:SingleAxisDisplay DataContext="{Binding LTrigger}"/>
-            <Separator Height="10" Background="Transparent"/>
-            <view:SingleAxisDisplay DataContext="{Binding RTrigger}"/>
+
+            <Separator Width="10" Background="Transparent"/>
+
+            <ListView Width="150"
+                      Background="Transparent" BorderBrush="Transparent"
+                      HorizontalContentAlignment="Stretch"
+                      ItemsSource="{Binding Controller.Buttons}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <view:ButtonDisplay DataContext="{Binding Path=button}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
         </StackPanel>
     </Border>
     

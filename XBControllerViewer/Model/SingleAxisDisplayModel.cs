@@ -18,7 +18,6 @@ namespace XBControllerViewer.Model
 {
     public class SingleAxisDisplayModel : ObservableObject
     {
-
         private int _value = 0;
         public int Value
         {

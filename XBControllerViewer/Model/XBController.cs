@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,31 +12,38 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace XBControllerViewer.Model
 {
-
-    public enum ButtonMasks
-    {
-        XINPUT_GAMEPAD_DPAD_UP = 0x0001,
-        XINPUT_GAMEPAD_DPAD_DOWN = 0x0002,
-        XINPUT_GAMEPAD_DPAD_LEFT = 0x0004,
-        XINPUT_GAMEPAD_DPAD_RIGHT = 0x0008,
-        XINPUT_GAMEPAD_START = 0x0010,
-        XINPUT_GAMEPAD_BACK = 0x0020,
-        XINPUT_GAMEPAD_LEFT_THUMB = 0x0040,
-        XINPUT_GAMEPAD_RIGHT_THUMB = 0x0080,
-        XINPUT_GAMEPAD_LEFT_SHOULDER = 0x0100,
-        XINPUT_GAMEPAD_RIGHT_SHOULDER = 0x0200,
-        XINPUT_GAMEPAD_A = 0x1000,
-        XINPUT_GAMEPAD_B = 0x2000,
-        XINPUT_GAMEPAD_X = 0x4000,
-        XINPUT_GAMEPAD_Y = 0x8000,
-    }
-
     public class XBController
     {
+        private enum Masks
+        {
+            U = 0x0001,
+            D = 0x0002,
+            L = 0x0004,
+            R = 0x0008,
+            ST = 0x0010,
+            BA = 0x0020,
+            LS = 0x0040,
+            RS = 0x0080,
+            LB = 0x0100,
+            RB = 0x0200,
+            A = 0x1000,
+            B = 0x2000,
+            X = 0x4000,
+            Y = 0x8000
+        }
+
+        public struct ButtonMaskPair
+        {
+            public ButtonDisplayModel button { get; set; }
+            public int mask;
+        }
+
         public DualAxisDisplayModel LStick { get; }
         public DualAxisDisplayModel RStick { get; }
         public SingleAxisDisplayModel LTrigger { get; }
         public SingleAxisDisplayModel RTrigger { get; }
+
+        public List<ButtonMaskPair> Buttons { get; }
 
         public XBController()
         {
@@ -62,6 +70,17 @@ namespace XBControllerViewer.Model
                 MinScale = 0,
                 MaxScale = 255
             };
+
+            Buttons = new List<ButtonMaskPair>();
+            foreach (Tuple<string, int> mask in Enum.GetValues(typeof(Masks)).Cast<Masks>().Select(x => new Tuple<string, int>(x.ToString(), (int)x)))
+            {
+                Buttons.Add(new ButtonMaskPair()
+                {
+                    button = new ButtonDisplayModel(mask.Item1),
+                    mask = mask.Item2
+                });
+                Debug.WriteLine($"{mask.Item1}, {mask.Item2}");
+            }
         }
 
         public void SetState(XBControllerInterface.XBControllerState state)
@@ -73,6 +92,11 @@ namespace XBControllerViewer.Model
 
             LTrigger.Value = state.leftTrigger;
             RTrigger.Value = state.rightTrigger;
+
+            foreach (ButtonMaskPair pair in Buttons)
+            {
+                pair.button.Value = (state.buttons & pair.mask) > 0;
+            }
         }
     }
 }

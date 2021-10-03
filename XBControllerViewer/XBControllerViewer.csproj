@@ -77,12 +77,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\BoolToColourConverter.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Model\ButtonDisplayModel.cs" />
     <Compile Include="Model\DualAxisDisplayModel.cs" />
     <Compile Include="Model\SingleAxisDisplayModel.cs" />
     <Compile Include="Model\XBController.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\ButtonDisplay.xaml.cs">
+      <DependentUpon>ButtonDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DualAxisDisplay.xaml.cs">
       <DependentUpon>DualAxisDisplay.xaml</DependentUpon>
     </Compile>
@@ -102,6 +107,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ButtonDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DualAxisDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

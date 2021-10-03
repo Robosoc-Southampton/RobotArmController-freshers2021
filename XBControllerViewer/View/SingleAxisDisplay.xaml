@@ -7,15 +7,11 @@
              xmlns:model="clr-namespace:XBControllerViewer.Model"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=model:SingleAxisDisplayModel}">
-
-    <Border>
-        <StackPanel Orientation="Vertical">
-            <ProgressBar Background="OrangeRed" Height="25"
-                             Minimum="{Binding MinScale}" Maximum="{Binding MaxScale}"
-                             Value="{Binding Value}"/>
-            <Label HorizontalAlignment="Left"
-                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                   Content="{Binding Value}"/>
-        </StackPanel>
-    </Border>
+    <StackPanel Orientation="Vertical">
+        <ProgressBar Background="OrangeRed" Height="25"
+                     Minimum="{Binding MinScale}" Maximum="{Binding MaxScale}"
+                     Value="{Binding Value}"/>
+        <Label HorizontalAlignment="Left"
+               Content="{Binding Value}"/>
+    </StackPanel>
 </UserControl>

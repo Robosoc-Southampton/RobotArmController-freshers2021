@@ -7,31 +7,29 @@
              xmlns:model="clr-namespace:XBControllerViewer.Model"
              d:DataContext="{d:DesignInstance Type=model:DualAxisDisplayModel}"
              mc:Ignorable="d">
-    <Border>
-        <StackPanel Orientation="Vertical">
-            <Grid Width="140" Height="140"
+    <StackPanel Orientation="Vertical">
+        <Grid Width="140" Height="140"
                   HorizontalAlignment="Left"
                   Background="OrangeRed">
-                <Line Stroke="Gray" StrokeThickness="2"
-                      X1="70" Y1="20"
-                      X2="70" Y2="120"/>
-                <Line Stroke="Gray" StrokeThickness="2"
-                      X1="20" Y1="70"
-                      X2="120" Y2="70"/>
-                <Grid Width ="40" Height="40">
-                    <Line Stroke="Black" StrokeThickness="4"
-                          X1="20" Y1="0"
-                          X2="20" Y2="40"/>
-                    <Line Stroke="Black" StrokeThickness="4"
-                          X1="0" Y1="20"
-                          X2="40" Y2="20"/>
-                    <Grid.RenderTransform>
-                        <TranslateTransform X="{Binding RenderTransformX}"
-                                            Y="{Binding RenderTransformY}"/>
-                    </Grid.RenderTransform>
-                </Grid>
+            <Line Stroke="Gray" StrokeThickness="2"
+                  X1="70" Y1="20"
+                  X2="70" Y2="120"/>
+            <Line Stroke="Gray" StrokeThickness="2"
+                  X1="20" Y1="70"
+                  X2="120" Y2="70"/>
+            <Grid Width ="40" Height="40">
+                <Line Stroke="Black" StrokeThickness="4"
+                      X1="20" Y1="0"
+                      X2="20" Y2="40"/>
+                <Line Stroke="Black" StrokeThickness="4"
+                      X1="0" Y1="20"
+                      X2="40" Y2="20"/>
+                <Grid.RenderTransform>
+                    <TranslateTransform X="{Binding RenderTransformX}"
+                                        Y="{Binding RenderTransformY}"/>
+                </Grid.RenderTransform>
             </Grid>
-            <Label Content="{Binding PosAsString}"/>
-        </StackPanel>
-    </Border>
+        </Grid>
+        <Label Content="{Binding PosAsString}"/>
+    </StackPanel>
 </UserControl>

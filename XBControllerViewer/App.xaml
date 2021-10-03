@@ -1,13 +1,9 @@
 ﻿<Application x:Class="XBControllerViewer.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:XBControllerViewer"
+             xmlns:local="clr-namespace:XBControllerViewer" xmlns:converter="clr-namespace:XBControllerViewer.Converter"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="Themes/SingleAxisDisplayTheme.xaml"/>-->
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <converter:BoolToColourConverter x:Key="BoolToColourConverter"/>
     </Application.Resources>
 </Application>
