@@ -56,6 +56,49 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <Separator Width="10" Background="Transparent"/>
+
+            <Grid Width="150">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <ListView Grid.Row="0"
+                          Background="Transparent" BorderBrush="Transparent"
+                          HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                          ItemsSource="{Binding Bindings}" SelectedItem="{Binding SelectedBinding}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <view:IOBindingDisplay DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <StackPanel Grid.Row="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox Grid.Column="0"
+                                  ItemsSource="{Binding Path=Controller.Getters.Keys}"
+                                  SelectedItem="{Binding InputBindingSelection}" SelectedIndex="0"/>
+                        <TextBox Grid.Column="1"
+                                 Text="{Binding OutputBindingName}"/>
+                    </Grid>
+
+                    <Separator Width="10" Background="Transparent"/>
+
+                    <Button Content="AddBinding" Command="{Binding CreateBinding}"/>
+
+                    <Separator Width="10" Background="Transparent"/>
+                    
+                    <Button Content="RemoveBinding" Command="{Binding RemoveBinding}"/>
+                </StackPanel>
+            </Grid>
             
         </StackPanel>
     </Border>

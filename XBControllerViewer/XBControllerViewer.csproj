@@ -82,6 +82,7 @@
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Model\ButtonDisplayModel.cs" />
     <Compile Include="Model\DualAxisDisplayModel.cs" />
+    <Compile Include="Model\IOBindingModel.cs" />
     <Compile Include="Model\SingleAxisDisplayModel.cs" />
     <Compile Include="Model\XBController.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -90,6 +91,9 @@
     </Compile>
     <Compile Include="View\DualAxisDisplay.xaml.cs">
       <DependentUpon>DualAxisDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IOBindingDisplay.xaml.cs">
+      <DependentUpon>IOBindingDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SingleAxisDisplay.xaml.cs">
       <DependentUpon>SingleAxisDisplay.xaml</DependentUpon>
@@ -112,6 +116,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DualAxisDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IOBindingDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

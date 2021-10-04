@@ -45,6 +45,8 @@ namespace XBControllerViewer.Model
 
         public List<ButtonMaskPair> Buttons { get; }
 
+        public Dictionary<string, Func<int>> Getters { get; }
+
         public XBController()
         {
             LStick = new DualAxisDisplayModel()
@@ -71,15 +73,27 @@ namespace XBControllerViewer.Model
                 MaxScale = 255
             };
 
+            Getters = new Dictionary<string, Func<int>>()
+            {
+                ["LStickX"] = () => (int)LStick.XValue,
+                ["LStickY"] = () => (int)LStick.YValue,
+                ["RStickX"] = () => (int)RStick.XValue,
+                ["RStickY"] = () => (int)RStick.YValue,
+                ["LTrigger"] = () => LTrigger.Value,
+                ["RTrigger"] = () => RTrigger.Value
+            };
+
             Buttons = new List<ButtonMaskPair>();
             foreach (Tuple<string, int> mask in Enum.GetValues(typeof(Masks)).Cast<Masks>().Select(x => new Tuple<string, int>(x.ToString(), (int)x)))
             {
+                ButtonDisplayModel button = new ButtonDisplayModel(mask.Item1);
+
+                Getters.Add(mask.Item1, () => button.Value ? 1 : 0);
                 Buttons.Add(new ButtonMaskPair()
                 {
-                    button = new ButtonDisplayModel(mask.Item1),
+                    button = button,
                     mask = mask.Item2
                 });
-                Debug.WriteLine($"{mask.Item1}, {mask.Item2}");
             }
         }
 
