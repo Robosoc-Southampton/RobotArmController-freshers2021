@@ -85,9 +85,13 @@
     <Compile Include="Model\IOBindingModel.cs" />
     <Compile Include="Model\SingleAxisDisplayModel.cs" />
     <Compile Include="Model\XBController.cs" />
+    <Compile Include="ViewModel\ControllerIOViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\ButtonDisplay.xaml.cs">
       <DependentUpon>ButtonDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ControllerIODisplay.xaml.cs">
+      <DependentUpon>ControllerIODisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DualAxisDisplay.xaml.cs">
       <DependentUpon>DualAxisDisplay.xaml</DependentUpon>
@@ -112,6 +116,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\ButtonDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ControllerIODisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

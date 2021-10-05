@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="XBControllerViewer.View.ControllerIODisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:XBControllerViewer.View"
+             xmlns:viewmodel="clr-namespace:XBControllerViewer.ViewModel"
+             xmlns:model="clr-namespace:XBControllerViewer.Model"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=viewmodel:ControllerIOViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Border Background="Aquamarine" Padding="10"
+            HorizontalAlignment="Left" VerticalAlignment="Stretch">
+        <StackPanel Orientation="Horizontal">
+
+            <StackPanel Orientation="Vertical" 
+                    DataContext="{Binding Controller}">
+
+                <StackPanel Orientation="Horizontal">
+                    <local:DualAxisDisplay DataContext="{Binding LStick}"/>
+                    <Separator Width="10" Background="Transparent"/>
+                    <local:DualAxisDisplay DataContext="{Binding RStick}"/>
+                </StackPanel>
+
+                <Separator Height="10" Background="Transparent"/>
+                <local:SingleAxisDisplay DataContext="{Binding LTrigger}"/>
+                <Separator Height="10" Background="Transparent"/>
+                <local:SingleAxisDisplay DataContext="{Binding RTrigger}"/>
+                <Separator Height="10" Background="Transparent"/>
+
+            </StackPanel>
+
+            <Separator Width="10" Background="Transparent"/>
+
+            <ListView Width="150"
+                      Background="Transparent" BorderBrush="Transparent"
+                      HorizontalContentAlignment="Stretch"
+                      ItemsSource="{Binding Controller.Buttons}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:ButtonDisplay DataContext="{Binding Path=button}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Separator Width="10" Background="Transparent"/>
+
+            <Grid Width="150">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <ListView Grid.Row="0"
+                          Background="Transparent" BorderBrush="Transparent"
+                          HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                          ItemsSource="{Binding Bindings}" SelectedItem="{Binding SelectedBinding}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <local:IOBindingDisplay DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <StackPanel Grid.Row="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox Grid.Column="0"
+                                  ItemsSource="{Binding Path=Controller.Getters.Keys}"
+                                  SelectedItem="{Binding InputBindingSelection}" SelectedIndex="0"/>
+                        <TextBox Grid.Column="1"
+                                 Text="{Binding OutputBindingName}"/>
+                    </Grid>
+
+                    <Separator Width="10" Background="Transparent"/>
+
+                    <Button Content="AddBinding" Command="{Binding CreateBinding}"/>
+
+                    <Separator Width="10" Background="Transparent"/>
+
+                    <Button Content="RemoveBinding" Command="{Binding RemoveBinding}"/>
+                </StackPanel>
+            </Grid>
+
+        </StackPanel>
+    </Border>
+</UserControl>
