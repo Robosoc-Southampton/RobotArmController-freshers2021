@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Input;
 using XBControllerViewer.Core;
 
 namespace XBControllerViewer.ViewModel
@@ -7,6 +10,11 @@ namespace XBControllerViewer.ViewModel
     {
         public List<ControllerIOViewModel> Controllers { get; }
         public RelayCommand OnExit { get; }
+        public RelayCommand OnMinimize { get; }
+        public RelayCommand OnMaximize { get; }
+        public RelayCommand OnClose { get; }
+        public RelayCommand OnMouseDown { get; }
+        public RelayCommand OnDrag { get; }
 
         public Dictionary<string, Dictionary<string, int>> EvaluateBindings
         {
@@ -31,11 +39,37 @@ namespace XBControllerViewer.ViewModel
                 Controllers.Add(new ControllerIOViewModel(i));
             }
 
-            OnExit = new RelayCommand(
+            OnMinimize = new RelayCommand(
             (param) =>
             {
-                XBControllerInterface.SetVibrate(0, 0);
+                Application.Current.MainWindow.WindowState = WindowState.Minimized;
+            });
+
+            OnMaximize = new RelayCommand(
+            (param) =>
+            {
+                Application.Current.MainWindow.WindowState = Application.Current.MainWindow.WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
+            });
+
+            OnClose = new RelayCommand(
+            (param) =>
+            {
+                foreach (ControllerIOViewModel controller in Controllers)
+                {
+                    XBControllerInterface.SetVibrate(controller.ControllerIndex, 0);
+                }
                 XBControllerInterface.Stop();
+
+                Application.Current.MainWindow.Close();
+            });
+
+            OnMouseDown = new RelayCommand(
+            (param) =>
+            {
+                if (Mouse.LeftButton == MouseButtonState.Pressed)
+                {
+                    Application.Current.MainWindow.DragMove();
+                }
             });
 
 

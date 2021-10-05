@@ -7,25 +7,57 @@
         xmlns:viewmodel="clr-namespace:XBControllerViewer.ViewModel"
         xmlns:view="clr-namespace:XBControllerViewer.View"
         mc:Ignorable="d"
-        Title="MainWindow"
         Height="450" Width="800"
-        Background="LightBlue">
+        Background="LightBlue"
+        WindowStyle="None">
+
+    <Window.DataContext>
+        <viewmodel:MainViewModel/>
+    </Window.DataContext>
+    
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction Command="{Binding OnExit}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
-    <Window.DataContext>
-        <viewmodel:MainViewModel/>
-    </Window.DataContext>
 
     <Grid>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseDown">
+                <i:InvokeCommandAction Command="{Binding OnMouseDown}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"
+              Background="Transparent">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDown">
+                    <i:InvokeCommandAction Command="{Binding OnDrag}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Label Content="Controller IO Mapper"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Padding" Value="6, 0"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button Content="🗕"
+                        Command="{Binding OnMinimize}"/>
+                <Button Content="🗖"
+                        Command="{Binding OnMaximize}"/>
+                <Button Content="✕"
+                        Command="{Binding OnClose}"/>
+            </StackPanel>
+        </Grid>
 
         <ListView Grid.Row="1" x:Name="ControllerList"
                   ItemsSource="{Binding Controllers}" SelectedIndex="0">
